@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Sent Messages ({{ messages|length }})</h1>
+    {% for m in messages %}
+        <div class="msg">
+            <b>{{ m['alias'] or 'Anonymous' }}</b> - <small>{{ m['created_at'] }} UTC</small>
+            <p style="white-space: pre-wrap">{{ m['message'] }}</p>
+            <form method="post" action="{{ url_for('delete_message', message_id=m['id']) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    {% else %}
+        <p>No messages yet.</p>
+    {% endfor %}
+{% endblock %}

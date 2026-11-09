@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Maha's Anon Messaging Board</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 0 16px; background: #f5f5f5; }
+        input, textarea { width: 100%; padding: 8px; margin: 4px 0 12px; box-sizing: border-box; }
+        button { padding: 8px 16px; background: #2563eb; color: white; border: none; cursor: pointer; }
+        .msg { background: white; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; }
+        .flash { padding: 8px; background: #e0e7ef; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+    {% if session.get('logged_in') %}
+    <p>
+        <a href="{{ url_for('home') }}">Home</a> |
+        <a href="{{ url_for('admin') }}">Inbox</a>
+        <form method="post" action="{{ url_for('logout') }}" style="display:inline">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit">Log out</button>
+        </form>
+    </p>
+    {% endif %}
+
+    {% for category, text in get_flashed_messages(with_categories=true) %}
+        <div class="flash">{{ text }}</div>
+    {% endfor %}
+
+    {% block content %}{% endblock %}
+</body>
+</html>

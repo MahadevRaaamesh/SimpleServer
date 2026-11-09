@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Send Anon Message Here</h1>
+    <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label>Alias (optional)</label>
+        <input type="text" name="alias" maxlength="{{ max_alias }}">
+        <label>Message</label>
+        <textarea name="message" rows="6" maxlength="{{ max_len }}" required></textarea>
+        <button type="submit">Send</button>
+    </form>
+{% endblock %}
